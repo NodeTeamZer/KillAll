@@ -1,8 +1,7 @@
 const app = require('express')();
-const server = require('http').createServer(app);
-const io = require('socket.io').listen(server);
 const ent = require('ent');
 const http = require('http').Server(app);
+const io = require('socket.io').listen(http);
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
