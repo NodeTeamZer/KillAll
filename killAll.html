@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Kill All</title>
+</head>
+<body>
+    <button onclick="formulaire()">Nouvelle partie</button>
+    <form id="formulaire"  hidden>
+        <div>
+            <label for="name">Nom de votre champion: </label>
+            <input type="text" id="name" name="user_name">
+        </div>
+        <p>Vous avez 15 points à placer selon votre convenance. 1 point minimum et 9 maximum par statistique.</p>
+        <label>Valeur d'<strong>attaque</strong> de votre champion: </label>
+        <input id="attaque" type="number" value="5" min="1" max="9">
+        <label>Valeur de <strong>défense</strong> de votre champion: </label>
+        <input id="defense" type="number" value="5" min="1" max="9">
+        <label>Valeur d'<strong>agilité</strong> de votre champion: </label>
+        <input id="agilite" type="number" value="5" min="1" max="9">
+        
+    </form>
+    <button id="boutonPoint" onclick="calcul()" hidden>Valider mes points</button>
+    <div id="pointLeft"></div>
+    <div id="test"></div>
+    <div id="combat" hidden>
+        <p>combat</p>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:3000');
+        
+        function formulaire() {
+          let form = document.getElementById("formulaire");
+          let calculPoint = document.getElementById("boutonPoint");
+          if (form.style.display === "none") {
+              form.style.display = "block";
+              calculPoint.style.display = "block";
+          } else {
+              form.style.display = "none";
+              calculPoint.style.display = "none";
+          }
+        }
+        function calcul(){
+            
+            let point = 15 - Number(document.getElementById("attaque").value) - Number(document.getElementById("defense").value) - Number(document.getElementById("agilite").value);
+            if (point > 0){
+                 document.getElementById("pointLeft").innerHTML = "il vous reste "+point+" point(s). Voulez vous vraiment lancer la partie?? <input type='submit' id='start' value='Commencer la partie' onclick='combat()'>";
+            }else if (point < 0) {
+                 document.getElementById("pointLeft").innerHTML = "Désolé vous ne pouvez pas dépasser 15 points de statistique.";
+            }else {
+                 document.getElementById("pointLeft").innerHTML = "<input type='submit' id='start' value='Commencer la partie' onclick='combat()'>";
+            }  
+        }
+        
+        function combat(){
+          let combat = document.getElementById("combat");
+          let form = document.getElementById("formulaire");
+          let point = document.getElementById("boutonPoint");
+          let start = document.getElementById("start");
+          if (combat.style.display === "none") {
+              combat.style.display = "block";
+              form.style.display = "none";
+              point.style.display = "none";
+              start.style.display = "none";
+          } else {
+              combat.style.display = "none";
+              form.style.display = "block";
+              point.style.display = "block";
+              start.style.display = "block";
+          }
+            /*let data = "{pseudo : "+document.getElementById("name")+", attaque : "+Number(document.getElementById("attaque").value)+", defense : "+Number(document.getElementById("defense").value)+", "+Number(document.getElementById("agilite").value)+"}";*/
+          let pseudo = document.getElementById("name").value;
+          socket.emit('NewPlayer', pseudo);
+            
+            
+            
+            
+          /*document.getElementById("test").innerHTML = pseudo;*/
+        }
+        
+        /*socket.on('NewPlayer', function(pseudo) {
+            document.getElementById("test").innerHTML = pseudo;
+        })*/
+    </script>
+    
+    </body>
+</html>
