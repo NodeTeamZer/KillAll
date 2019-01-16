@@ -1,0 +1,25 @@
+Combat 1 vs 1
+Un champion possède 3 statistiques
+Elles vont toutes de 1 à 9
+L'attaque 
+La défense 
+L'agilité 
+A la création du personnage le joueur doit placer ses 15 points à sa convenance.
+Chaque joueur a 10 points de vie.
+
+Combat:
+
+Pile ou face pour décider qui de joueur1 ou joueur2 agit en premier.
+
+Le joueur1 gagne le pile ou face.
+Le joueur1 lance un dé de 10 d'agilité. 
+	S'il fait moins ou autant que sa statistique d'agilité, il peut attaquer.
+		S'il fait moins ou autant que sa statistique d'attaque, le joueur2 va tenter de défendre.
+			Si le joueur2 fait plus que sa statistique de défense.
+				Le joueur1 réussit son attaque et le joueur2 perd 1 point de vie. Le tour du joueur1 est terminé.
+			Sinon le joueur2 défend l'attaque. Le tour du joueur1 est terminé.
+		Sinon il loupe son attaque. le tour du joueur1 est terminé.
+	Sinon il perd son initiative et son tour est terminé.
+Le joueur2 lance un dé de 10 d'agilité.
+
+Tant que les 2 joueurs sont vivant, ils alternent les tours
