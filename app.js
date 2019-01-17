@@ -16,6 +16,7 @@ if (!String.prototype.format) {
  * @type {createApplication}
  */
 const express = require("express");
+const app = express();
 
 /**
  * Using MySQL module.
@@ -36,13 +37,19 @@ const router = express.Router();
 /**
  * Stores the express app.
  */
-const app = express();
-
 const path = require('path');
 const ent = require('ent');
 const http = require('http').Server(app);
 const io = require('socket.io').listen(http);
 const bodyParser = require('body-parser');
+
+const connection = mysql.createConnection({
+    host : 'localhost',
+    user : 'root',
+    password : 'root',
+    port: 8889,
+    database : 'killall'
+});
 
 /**
  * Stores the server listening port.
@@ -75,34 +82,49 @@ router.route("/api/characters").post(function(req, res){
     characterManager.deleteAPI(req, res);
 });
 
-io.sockets.on('connection', function (socket, pseudo) {
-    socket.on('NewPlayer', function(pseudo) {
-        pseudo = ent.encode(pseudo);
-        console.log('pseudo: '+pseudo);
-        socket.pseudo = pseudo;
-        socket.broadcast.emit('NewPlayer', pseudo);
-    });
-});
-
-
 app.get('/', function(req, res){
-	res.render('killAll.ejs', {title:"Kill All!"})
+	res.render('newGame.ejs', {title:"KillEmAll!"})
+});
+app.get('/combat', function(req, res) {
+	res.redirect('/');
+});
+app.post('/combat', function(req, res) {
+	if (req.body.user_name) {
+		console.log(req.body);
+		res.render('combat.ejs', {
+			title:"combat - KillEmAll!"
+			,user_name: req.body.user_name
+			,user_attack_points: req.body.attack_points
+			,user_defense_points: req.body.defense_points
+			,user_agility_points: req.body.agility_points 
+		});
+	} else {
+		res.redirect('/');
+	}
+});
+io.sockets.on('connection', function (socket, data) {
+    socket.on('NewConnexion', function(data) {
+        let dataC = JSON.parse(data);
+        let loginConnexion = dataC.login;
+        let passwordConnexion = dataC.password;
+
+    });
+    socket.on('NewInscription', function(data) {
+        let dataC = JSON.parse(data);
+        let loginInscription = dataC.login;
+        let passwordInscription = dataC.password;
+    });
+    // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
+    socket.on('NewPlayer', function(data) {
+	let user_name = ent.encode(data['user_name']);
+	let user_attack_points = ent.encode(data['user_attack_points']);
+	let user_defense_points = ent.encode(data['user_defense_points']);
+	let user_agility_points = ent.encode(data['user_agility_points']);
+        socket.user_name = user_name;
+	console.log('new player: '+ user_name+' with '+ user_attack_points +' attack points, '+ user_defense_points +' defense points and '+ user_agility_points +' agility points.');
+    });
 });
 
 http.listen(port, function(){
     console.log('listening on *:3000');
 });
-
-/*io.sockets.on('NewPlayer', function (socket, pseudo) {
-    // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
-    socket.on('Newplayer', function(pseudo) {
-        pseudo = ent.encode(pseudo);
-        socket.pseudo = pseudo;
-    });
-
-    // Dès qu'on reçoit un message, on récupère le pseudo de son auteur et on le transmet aux autres personnes
-    socket.on('message', function (message) {
-        message = ent.encode(message);
-        socket.broadcast.emit('message', {pseudo: socket.pseudo, message: message});
-    });
-});*/

@@ -29,7 +29,7 @@ $(function() {
     // validation inscription form
     $("#inscriptionButton").click(function(){
         if ($('#loginInscription').val() && $('#passwordInscription').val()){
-           let dataInscription = "{login : "+$('#loginInscription').val()+", password : "+$('#passwordInscription').val()+"}";
+	   let dataInscription = '{"login" : "'+$('#loginInscription').val()+'", "password" : "'+$('#passwordInscription').val()+'"}';
             socket.emit('NewInscription', dataInscription);
         }
         if ($('#loginInscription').val() == ""){

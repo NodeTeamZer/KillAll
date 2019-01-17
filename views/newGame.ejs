@@ -16,27 +16,24 @@
     <a class="btn btn-secondary" id="inscriptionButton">Valider mon inscription</a>
     </form>
     <button class="btn btn-secondary mt-3" id="open-form">Nouvelle partie</button>
-    <form id="new-champ-form" class="d-none">
+    <form action="/combat" method="POST" id="new-champ-form" class="d-none">
         <div>
             <label for="name">Nom de votre champion:</label>
             <input type="text" id="name" name="user_name" required>
         </div>
         <p>Vous avez 15 points à placer selon votre convenance. 1 point minimum et 9 maximum par statistique.</p>
         <label>Valeur d'<strong>attaque</strong> de votre champion: </label>
-        <input id="attaque" type="number" value="5" min="1" max="9">
+        <input id="attack" name="attack_points" type="number" value="5" min="1" max="9">
         <label>Valeur de <strong>défense</strong> de votre champion: </label>
-        <input id="defense" type="number" value="5" min="1" max="9">
+        <input id="defense" name="defense_points" type="number" value="5" min="1" max="9">
         <label>Valeur d'<strong>agilité</strong> de votre champion: </label>
-        <input id="agilite" type="number" value="5" min="1" max="9">
+        <input id="agility" name="agility_points" type="number" value="5" min="1" max="9">
         
     <a class="btn btn-secondary" id="boutonPoint">Valider mes points</a>
     </form>
     <div id="pointLeft"></div>
-    <div id="combat" hidden>
-        <p>combat</p>
     </div>
     <script src="/socket.io/socket.io.js"></script>
-    
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="/main.js"></script> 
     </body>
