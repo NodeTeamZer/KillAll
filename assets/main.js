@@ -21,8 +21,13 @@ $(function() {
 			$('#password').after('<div id="password-alert" class="alert alert-danger">Veuillez renseigner votre mot de passe.</div>');
         } 
     });
-    socket.on('test', function(data) {
-            if (data == true){
+    
+    socket.on('connexionOk', function(data) {
+            if (data){
+                $("#open-connexion").toggleClass("d-none");
+                $("#connexion").toggleClass("d-none");
+                $("#open-inscription").toggleClass("d-none");
+                $("#inscription").toggleClass("d-none");
                 // display new game button
                 $("#open-form").toggleClass("d-none");
                 // open new game form on button click

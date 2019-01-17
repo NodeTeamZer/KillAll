@@ -49,14 +49,6 @@ const http = require('http').Server(app);
 const io = require('socket.io').listen(http);
 const bodyParser = require('body-parser');
 
-const connection = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password : 'root',
-    port: 8889,
-    database : 'killall'
-});
-
 /**
  * Stores the server listening port.
  * @type {number}
@@ -76,6 +68,7 @@ const CharacterManager = require("./CharacterManager.js");
 const UserManager = require("./UserManager.js");
 const characterManager = new CharacterManager();
 const userManager = new UserManager();
+const idKey = "{0}".format(userManager.fields[0]);
 
 // Defining the different character CRUD events depending on the method send to the route.
 router.route("/api/characters").post(function(req, res){
@@ -115,8 +108,12 @@ io.sockets.on('connection', function (socket, data) {
         let passwordConnexion = dataC.password;
 
         userManager.authenticate(loginConnexion, passwordConnexion, function (result) {
-            localStorage.setItem("{0}".format(userManager.fields[0]), result);
-        })
+            if (result != null) { 
+                localStorage.setItem(idKey, result);
+                socket.emit('connexionOk', result);
+            }
+        });
+        
     });
     socket.on('NewInscription', function(data) {
         let dataC = JSON.parse(data);
@@ -137,11 +134,10 @@ io.sockets.on('connection', function (socket, data) {
             user_attack_points,
             user_defense_points,
             user_agility_points,
-            localStorage.getItem("{0}".format(userManager.fields[0])));
-        console.log('new player: '+ user_name+' with '+ user_attack_points +' attack points, '+ user_defense_points +
-            ' defense points and '+ user_agility_points +' agility points.');
+            localStorage.getItem(idKey));
     });
 });
+
 
 http.listen(port, function(){
     console.log('listening on *:3000');
