@@ -1,4 +1,20 @@
 <% include header.ejs %>
+    <button class="btn btn-secondary mt-3" id="open-connexion">Connection</button>
+    <form id="connexion" class="d-none">
+        <label for="login">Identifiant: </label>
+        <input type="text" id="login" required>
+        <label for="password">Mot de passe: </label>
+        <input type="text" id="password" required>
+    <a class="btn btn-secondary" id="connexionButton">Au combat!!</a>
+    </form>
+    <button class="btn btn-secondary mt-3" id="open-inscription">Inscription</button>
+    <form id="inscription" class="d-none">
+        <label for="loginInscription">Choisissez votre identifiant: </label>
+        <input type="text" id="loginInscription" required>
+        <label for="passwordInscription">Choisissez votre mot de passe: </label>
+        <input type="text" id="passwordInscription" required>
+    <a class="btn btn-secondary" id="inscriptionButton">Valider mon inscription</a>
+    </form>
     <button class="btn btn-secondary mt-3" id="open-form">Nouvelle partie</button>
     <form id="new-champ-form" class="d-none">
         <div>
@@ -20,39 +36,6 @@
         <p>combat</p>
     </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io.connect('http://localhost:3000');
-        
-        function combat(){
-          let combat = document.getElementById("combat");
-          let form = document.getElementById("formulaire");
-          let point = document.getElementById("boutonPoint");
-          let start = document.getElementById("start");
-          if (combat.style.display === "none") {
-              combat.style.display = "block";
-              form.style.display = "none";
-              point.style.display = "none";
-              start.style.display = "none";
-          } else {
-              combat.style.display = "none";
-              form.style.display = "block";
-              point.style.display = "block";
-              start.style.display = "block";
-          }
-            /*let data = "{pseudo : "+document.getElementById("name")+", attaque : "+Number(document.getElementById("attaque").value)+", defense : "+Number(document.getElementById("defense").value)+", "+Number(document.getElementById("agilite").value)+"}";*/
-          let pseudo = document.getElementById("name").value;
-          socket.emit('NewPlayer', pseudo);
-            
-            
-            
-            
-          /*document.getElementById("test").innerHTML = pseudo;*/
-        }
-        
-        /*socket.on('NewPlayer', function(pseudo) {
-            document.getElementById("test").innerHTML = pseudo;
-        })*/
-    </script>
     
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="/main.js"></script> 
