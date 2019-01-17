@@ -16,7 +16,13 @@ if (!String.prototype.format) {
  * @type {createApplication}
  */
 const express = require("express");
+
 const app = express();
+
+if (typeof localStorage === "undefined" || localStorage === null) {
+    const LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+}
 
 /**
  * Using MySQL module.
@@ -108,20 +114,32 @@ io.sockets.on('connection', function (socket, data) {
         let loginConnexion = dataC.login;
         let passwordConnexion = dataC.password;
 
+        userManager.authenticate(loginConnexion, passwordConnexion, function (result) {
+            localStorage.setItem("{0}".format(userManager.fields[0]), result);
+        })
     });
     socket.on('NewInscription', function(data) {
         let dataC = JSON.parse(data);
         let loginInscription = dataC.login;
         let passwordInscription = dataC.password;
+
+        userManager.create(loginInscription, passwordInscription);
     });
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
     socket.on('NewPlayer', function(data) {
-	let user_name = ent.encode(data['user_name']);
-	let user_attack_points = ent.encode(data['user_attack_points']);
-	let user_defense_points = ent.encode(data['user_defense_points']);
-	let user_agility_points = ent.encode(data['user_agility_points']);
+        let user_name = ent.encode(data['user_name']);
+        let user_attack_points = ent.encode(data['user_attack_points']);
+        let user_defense_points = ent.encode(data['user_defense_points']);
+        let user_agility_points = ent.encode(data['user_agility_points']);
         socket.user_name = user_name;
-	console.log('new player: '+ user_name+' with '+ user_attack_points +' attack points, '+ user_defense_points +' defense points and '+ user_agility_points +' agility points.');
+
+        characterManager.create(user_name,
+            user_attack_points,
+            user_defense_points,
+            user_agility_points,
+            localStorage.getItem("{0}".format(userManager.fields[0])));
+        console.log('new player: '+ user_name+' with '+ user_attack_points +' attack points, '+ user_defense_points +
+            ' defense points and '+ user_agility_points +' agility points.');
     });
 });
 
