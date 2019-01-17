@@ -1,15 +1,9 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Kill All</title>
-</head>
-<body>
-    <button onclick="formulaire()">Nouvelle partie</button>
-    <form id="formulaire"  hidden>
+<% include header.ejs %>
+    <button class="btn btn-secondary mt-3" id="open-form">Nouvelle partie</button>
+    <form id="new-champ-form" class="d-none">
         <div>
-            <label for="name">Nom de votre champion: </label>
-            <input type="text" id="name" name="user_name">
+            <label for="name">Nom de votre champion:</label>
+            <input type="text" id="name" name="user_name" required>
         </div>
         <p>Vous avez 15 points à placer selon votre convenance. 1 point minimum et 9 maximum par statistique.</p>
         <label>Valeur d'<strong>attaque</strong> de votre champion: </label>
@@ -19,40 +13,15 @@
         <label>Valeur d'<strong>agilité</strong> de votre champion: </label>
         <input id="agilite" type="number" value="5" min="1" max="9">
         
+    <a class="btn btn-secondary" id="boutonPoint">Valider mes points</a>
     </form>
-    <button id="boutonPoint" onclick="calcul()" hidden>Valider mes points</button>
     <div id="pointLeft"></div>
-    <div id="test"></div>
     <div id="combat" hidden>
         <p>combat</p>
     </div>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://localhost:3000');
-        
-        function formulaire() {
-          let form = document.getElementById("formulaire");
-          let calculPoint = document.getElementById("boutonPoint");
-          if (form.style.display === "none") {
-              form.style.display = "block";
-              calculPoint.style.display = "block";
-          } else {
-              form.style.display = "none";
-              calculPoint.style.display = "none";
-          }
-        }
-        function calcul(){
-            
-            let point = 15 - Number(document.getElementById("attaque").value) - Number(document.getElementById("defense").value) - Number(document.getElementById("agilite").value);
-            if (point > 0){
-                 document.getElementById("pointLeft").innerHTML = "il vous reste "+point+" point(s). Voulez vous vraiment lancer la partie?? <input type='submit' id='start' value='Commencer la partie' onclick='combat()'>";
-            }else if (point < 0) {
-                 document.getElementById("pointLeft").innerHTML = "Désolé vous ne pouvez pas dépasser 15 points de statistique.";
-            }else {
-                 document.getElementById("pointLeft").innerHTML = "<input type='submit' id='start' value='Commencer la partie' onclick='combat()'>";
-            }  
-        }
         
         function combat(){
           let combat = document.getElementById("combat");
@@ -85,5 +54,7 @@
         })*/
     </script>
     
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/main.js"></script> 
     </body>
 </html>
