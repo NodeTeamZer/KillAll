@@ -70,8 +70,8 @@ class UserManager extends MySQLManager {
                 .format(this.table,
                     this.fields[1],
                     this.fields[2],
-                    login,
-                    password);
+                    this.connection.escape(login),
+                    this.connection.escape(password));
 
             this.connection.query(this.query, function (error) {
                 if (error) {
