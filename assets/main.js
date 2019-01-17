@@ -49,14 +49,14 @@ $(function() {
 
 	// points manager
 	$("#boutonPoint").click(function() {
-		let point = 15 - Number($('#attaque').val()) - Number($('#defense').val()) - Number($('#agilite').val());
+		let point = 15 - Number($('input[id="attack"]').val()) - Number($('input[id="defense"]').val()) - Number($('input[id="agility"]').val());
 		if (point > 0){
-			$("#pointLeft").html("il vous reste "+point+" point(s). Voulez vous vraiment lancer la partie?? <input type='submit' id='start' value='Commencer la partie' onclick='combat()'>");
+			M.toast({html: 'il vous reste "+point+" point(s). Voulez vous vraiment lancer la partie??'})
+			$("#pointLeft").html("Voulez vous vraiment lancer la partie?? <input type='submit' id='start' value='Commencer la partie' onclick='combat()'>");
 		}else if (point < 0) {
-			$("#pointLeft").html("Désolé vous ne pouvez pas dépasser 15 points de statistique.");
+			  M.toast({html: 'Désolé, vous ne pouvez pas dépasser 15 points de statistique.'})
 		}else if ($('#name').val() == "") {
-			$('#name-alert').remove();
-			$('#name').after('<div id="name-alert" class="alert alert-danger">Veuillez renseigner votre nom</div>');
+			  M.toast({html: 'Veuillez renseigner votre nom'})
 		}else {
 			$('#new-champ-form').submit();
 		}
