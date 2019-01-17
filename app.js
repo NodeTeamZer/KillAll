@@ -23,20 +23,10 @@ const express = require("express");
 const mysql = require('mysql');
 
 /**
- * Using body parser module (API's post method).
- * @type {Parsers|*}
- */
-const bodyParser = require("body-parser");
-
-/**
  * Using helmet for better security.
  * @type {helmet}
  */
 const helmet = require('helmet');
-
-const path = require('path');
-const ent = require('ent');
-
 
 /**
  * Using router to define the different accesses.
@@ -47,19 +37,18 @@ const router = express.Router();
  * Stores the express app.
  */
 const app = express();
+
+const path = require('path');
+const ent = require('ent');
 const http = require('http').Server(app);
 const io = require('socket.io').listen(http);
+const bodyParser = require('body-parser');
+
 /**
  * Stores the server listening port.
  * @type {number}
  */
 const port = 3000;
-
-/**
- * Stores the server host name.
- * @type {string}
- */
-const host = "localhost";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -69,19 +58,6 @@ app.use(express.static(path.join(__dirname, 'assets'))); // set express to look 
 app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
 app.set('view engine', 'ejs'); // configure template engine
 app.disable('x-powered-by');
-
-app.get('/', function(req, res){
-	res.render('killAll.ejs', {title:"Kill All!"})
-});
-
-// Defining the default server access (game).
-router.route("/").get(function(req, res) {
-        io.sockets.on('connection', function (socket, dataConnexion) {
-            socket.on('NewConnexion', function(dataConnexion) {
-            let dataC = JSON.parse(dataConnexion);
-            });
-        });
-});
 
 const CharacterManager = require("./CharacterManager.js");
 const UserManager = require("./UserManager.js");
@@ -99,6 +75,34 @@ router.route("/api/characters").post(function(req, res){
     characterManager.deleteAPI(req, res);
 });
 
-app.listen(port, host, function(){
-    console.log("Server available");
+io.sockets.on('connection', function (socket, pseudo) {
+    socket.on('NewPlayer', function(pseudo) {
+        pseudo = ent.encode(pseudo);
+        console.log('pseudo: '+pseudo);
+        socket.pseudo = pseudo;
+        socket.broadcast.emit('NewPlayer', pseudo);
+    });
 });
+
+
+app.get('/', function(req, res){
+	res.render('killAll.ejs', {title:"Kill All!"})
+});
+
+http.listen(port, function(){
+    console.log('listening on *:3000');
+});
+
+/*io.sockets.on('NewPlayer', function (socket, pseudo) {
+    // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
+    socket.on('Newplayer', function(pseudo) {
+        pseudo = ent.encode(pseudo);
+        socket.pseudo = pseudo;
+    });
+
+    // Dès qu'on reçoit un message, on récupère le pseudo de son auteur et on le transmet aux autres personnes
+    socket.on('message', function (message) {
+        message = ent.encode(message);
+        socket.broadcast.emit('message', {pseudo: socket.pseudo, message: message});
+    });
+});*/
