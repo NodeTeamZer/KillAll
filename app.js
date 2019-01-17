@@ -82,15 +82,6 @@ router.route("/api/characters").post(function(req, res){
     characterManager.deleteAPI(req, res);
 });
 
-io.sockets.on('connection', function (socket, pseudo) {
-    socket.on('NewPlayer', function(pseudo) {
-        pseudo = ent.encode(pseudo);
-        console.log('pseudo: '+pseudo);
-        socket.pseudo = pseudo;
-        socket.broadcast.emit('NewPlayer', pseudo);
-    });
-});
-
 app.get('/', function(req, res){
 	res.render('newGame.ejs', {title:"KillEmAll!"})
 });
@@ -111,8 +102,18 @@ app.post('/combat', function(req, res) {
 		res.redirect('/');
 	}
 });
-
 io.sockets.on('connection', function (socket, data) {
+    socket.on('NewConnexion', function(data) {
+        let dataC = JSON.parse(data);
+        let loginConnexion = dataC.login;
+        let passwordConnexion = dataC.password;
+
+    });
+    socket.on('NewInscription', function(data) {
+        let dataC = JSON.parse(data);
+        let loginInscription = dataC.login;
+        let passwordInscription = dataC.password;
+    });
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
     socket.on('NewPlayer', function(data) {
 	let user_name = ent.encode(data['user_name']);
