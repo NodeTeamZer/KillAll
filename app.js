@@ -78,16 +78,14 @@ router.route("/api/characters").post(function(req, res){
 io.sockets.on('connection', function (socket, data) {  
     socket.on('NewConnexion', function(data) {
         let dataC = JSON.parse(data);
-        let login = dataC.login;
-        let password = dataC.password;
-        console.log(login);
+        let loginConnexion = dataC.login;
+        let passwordConnexion = dataC.password;
         
     });
     socket.on('NewInscription', function(data) {
         let dataC = JSON.parse(data);
-        let login = dataC.login;
-        let password = dataC.password;
-        console.log(login);
+        let loginInscription = dataC.login;
+        let passwordInscription = dataC.password;
         
     });
 });
