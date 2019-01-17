@@ -75,15 +75,22 @@ router.route("/api/characters").post(function(req, res){
     characterManager.deleteAPI(req, res);
 });
 
-io.sockets.on('connection', function (socket, pseudo) {
-    socket.on('NewPlayer', function(pseudo) {
-        pseudo = ent.encode(pseudo);
-        console.log('pseudo: '+pseudo);
-        socket.pseudo = pseudo;
-        socket.broadcast.emit('NewPlayer', pseudo);
+io.sockets.on('connection', function (socket, data) {  
+    socket.on('NewConnexion', function(data) {
+        let dataC = JSON.parse(data);
+        let login = dataC.login;
+        let password = dataC.password;
+        console.log(login);
+        
+    });
+    socket.on('NewInscription', function(data) {
+        let dataC = JSON.parse(data);
+        let login = dataC.login;
+        let password = dataC.password;
+        console.log(login);
+        
     });
 });
-
 
 app.get('/', function(req, res){
 	res.render('killAll.ejs', {title:"Kill All!"})
