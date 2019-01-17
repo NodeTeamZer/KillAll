@@ -21,7 +21,7 @@ class CharacterManager extends MySQLManager {
          * Stores the this.fields from the character table.
          * @type {string[]}
          */
-        this.fields = ["id", "nickname", "attack", "defense", "agility", "hp", "kill_number", "id_user"];
+        this.fields = ["id", "nickname", "attack", "defense", "agility", "kill_number", "id_user"];
 
         /**
          * Define the default kill number field value for new characters.
@@ -51,7 +51,7 @@ class CharacterManager extends MySQLManager {
         if (nickname === this.NULL || attack === this.NULL || defense === this.NULL || agility === this.NULL) {
             res.json({error: "Missing arguments : nickname, attack, defense and agility should be set."})
         } else {
-            this.query = "INSERT INTO `{0}`({1}, {2}, {3}, {4}, {5}, {6}, {7}) VALUES({8}, {9}, {10}, {11}, {12}, {13}, {14})"
+            this.query = "INSERT INTO `{0}`({1}, {2}, {3}, {4}, {5}, {6}) VALUES({7}, {8}, {9}, {10}, {11}, {12})"
                 .format(this.table,
                     this.fields[1],
                     this.fields[2],
@@ -59,12 +59,10 @@ class CharacterManager extends MySQLManager {
                     this.fields[4],
                     this.fields[5],
                     this.fields[6],
-                    this.fields[7],
                     nickname,
                     attack,
                     defense,
                     agility,
-                    this.defaultHP,
                     this.defaultKillNumber,
                     idUser);
 
@@ -134,7 +132,6 @@ class CharacterManager extends MySQLManager {
                 });
             });
         }
-
     }
 
     /**
@@ -148,16 +145,15 @@ class CharacterManager extends MySQLManager {
     create(nickname, attack, defense, agility, idUser) {
         if (nickname === this.NULL || attack === this.NULL || defense === this.NULL || agility === this.NULL ||
             idUser === this.NULL) {
-            console.log("Missing arguments : {1}, {2}, {3}, {4}, {5}, {6} and {7} should be set."
+            console.log("Missing arguments : {1}, {2}, {3}, {4}, {5} and {6} should be set."
                 .format(this.fields[1],
                     this.fields[2],
                     this.fields[3],
                     this.fields[4],
                     this.fields[5],
-                    this.fields[6],
-                    this.fields[7]));
+                    this.fields[6]));
         } else {
-            this.query = "INSERT INTO `{0}`({1}, {2}, {3}, {4}, {5}, {6}, {7}) VALUES({8}, {9}, {10}, {11}, {12}, {13}, {14})"
+            this.query = "INSERT INTO `{0}`({1}, {2}, {3}, {4}, {5}, {6}) VALUES({7}, {8}, {9}, {10}, {11}, {12})"
                 .format(this.table,
                     this.fields[1],
                     this.fields[2],
@@ -165,14 +161,12 @@ class CharacterManager extends MySQLManager {
                     this.fields[4],
                     this.fields[5],
                     this.fields[6],
-                    this.fields[7],
-                    nickname,
-                    attack,
-                    defense,
-                    agility,
-                    this.defaultHP,
+                    this.connection.escape(nickname),
+                    this.connection.escape(attack),
+                    this.connection.escape(defense),
+                    this.connection.escape(agility),
                     this.defaultKillNumber,
-                    idUser);
+                    this.connection.escape(idUser));
 
             this.connection.query(this.query, function (error) {
                 if (error) {
@@ -192,7 +186,10 @@ class CharacterManager extends MySQLManager {
      * @param callback The callback function.
      */
     loadUserCharacters(idUser, callback) {
-        this.query = "SELECT * FROM `{0}` WHERE {1} = {2}".format(this.table, this.fields[7], idUser);
+        this.query = "SELECT * FROM `{0}` WHERE {1} = {2}"
+            .format(this.table,
+                this.fields[7],
+                this.connection.escape(idUser));
         let result;
 
         this.connection.query(this.query, function (error, results) {
@@ -206,6 +203,25 @@ class CharacterManager extends MySQLManager {
         });
     }
 
+    /**
+     * Increase the number of kills by the number given in parameter.
+     * @param id The id of the character to update.
+     * @param nb The number to add to the existing kill number.
+     */
+    increaseKills(id, nb) {
+        this.query = "UPDATE `{0}` SET {1} = {2} WHERE {3} = {4}"
+            .format(this.table,
+                this.fields[5],
+                this.connection.escape(nb),
+                this.fields[0],
+                this.connection.escape(id));
+
+        this.connection.query(query, function(error) {
+            if (error) {
+                console.log(error);
+            }
+        });
+    }
 }
 
 module.exports = CharacterManager;
