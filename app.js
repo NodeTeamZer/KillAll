@@ -1,4 +1,6 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
+const path = require('path');
 const ent = require('ent');
 const http = require('http').Server(app);
 const io = require('socket.io').listen(http);
@@ -11,12 +13,16 @@ const connection = mysql.createConnection({
     database : 'killall'
 });
 
+app.use(express.static(path.join(__dirname, 'assets'))); // set express to look in this folder for static files
+app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
+app.set('view engine', 'ejs'); // configure template engine
+
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/killAll.html');
+	res.render('killAll.ejs', {title:"Kill All!"})
 });
 
 io.sockets.on('connection', function (socket, pseudo) {
