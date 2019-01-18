@@ -84,34 +84,41 @@ router.route("/api/characters").post(function(req, res){
 });
 
 app.get('/', function(req, res){
-	res.render('newGame.ejs', {title:"KillEmAll!"})
+    res.render('newGame.ejs', {title:"KillEmAll!"})
 });
 
 app.post('/combat', function(req, res) {
-	if (req.body.user_name) {
-		res.render('combat.ejs', {
-			title:"combat - KillEmAll!"
-			,user_name: req.body.user_name
-			,user_attack_points: req.body.attack_points
-			,user_defense_points: req.body.defense_points
-			,user_agility_points: req.body.agility_points
-		});
-	} else {
-		res.redirect('/');
-	}
+    if (req.body.user_name) {
+        res.render('combat.ejs', {
+            title:"combat - KillEmAll!"
+            ,user_name: req.body.user_name
+            ,user_attack_points: req.body.attack_points
+            ,user_defense_points: req.body.defense_points
+            ,user_agility_points: req.body.agility_points
+        });
+    } else {
+        res.redirect('/');
+    }
 });
 
 app.get('/combat', function(req, res) {
-    // TODO : Check the character validity into DB.
-    let character = localStorage.getItem(characterKey);
+    // Checking validity of the character.
+    const userId = localStorage.getItem(idKey);
+    const character = localStorage.getItem(characterKey);
 
-    if (character) {
-        res.render('combat.ejs', {
-            title:"combat - KillEmAll!"
-            ,user_name: character.nickname
-            ,user_attack_points: character.attack
-            ,user_defense_points: character.defense
-            ,user_agility_points: character.agility
+    if (userId) {
+        characterManager.loadUserCharacter(userId, function(result) {
+            if (character == result) {
+                res.render('combat.ejs', {
+                    title:"combat - KillEmAll!"
+                    ,user_name: character.nickname
+                    ,user_attack_points: character.attack
+                    ,user_defense_points: character.defense
+                    ,user_agility_points: character.agility
+                });
+            } else {
+                res.redirect('/');
+            }
         });
     } else {
         res.redirect('/');
@@ -141,7 +148,7 @@ io.sockets.on('connection', function (socket, data) {
                 });
             }
         });
-        
+
     });
     socket.on('NewInscription', function(data) {
         let dataC = JSON.parse(data);
