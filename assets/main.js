@@ -21,7 +21,8 @@ $(function() {
     });
     
     // validation connexion form
-    $("#connexionButton").click(function(){
+    $("#connexionButton").click(function(event){
+	event.preventDefault();
         if ($('#login').val() && $('#password').val()){
             let dataConnexion = '{"login" : "'+$('#login').val()+'", "password" : "'+$('#password').val()+'"}';
             socket.emit('NewConnexion', dataConnexion);
@@ -38,6 +39,7 @@ $(function() {
     
     socket.on('ConnexionOk', function(data) {
             if (data){
+		M.toast({html: 'Bienvenue !'})
                 if (data.length > 0) {
                     const characterList = $("#characterList");
 
@@ -48,7 +50,7 @@ $(function() {
                                     data[elt].attack,
                                     data[elt].defense,
                                     data[elt].agility,
-                                    data[elt].kill);
+                                    data[elt].kills);
 
                             characterList.append(line);
                     }
@@ -60,6 +62,9 @@ $(function() {
                 $("#open-form").removeClass("d-none");
                 // open new game form on button click
                 $("#open-form").click(function() {
+		    $([document.documentElement, document.body]).animate({
+				scrollTop: $("#open-form").offset().top
+		    }, 2000);
                     $("#new-champ-form").toggleClass("d-none");
                 });
 
@@ -79,7 +84,7 @@ $(function() {
                 });
             }
     });
-
+    
     
     // open new inscription form
     $("#open-inscription").click(function(){
@@ -88,10 +93,14 @@ $(function() {
     });
 
     // validation inscription form
-    $("#inscriptionButton").click(function(){
+    $("#inscriptionButton").click(function(event){
+	event.preventDefault();
         if ($('#loginInscription').val() && $('#passwordInscription').val()){
-	        let dataInscription = '{"login" : "'+$('#loginInscription').val()+'", "password" : "'+$('#passwordInscription').val()+'"}';
+	    let dataInscription = '{"login" : "'+$('#loginInscription').val()+'", "password" : "'+$('#passwordInscription').val()+'"}';
             socket.emit('NewInscription', dataInscription);
+	    M.toast({html: 'Compte créé ! À présent, veuillez vous connecter.'})
+	    $('#inscription').addClass('d-none');
+	    $('#connexion').removeClass('d-none');
         }
         if ($('#loginInscription').val() == ""){
             $('#loginInscription-alert').remove();
