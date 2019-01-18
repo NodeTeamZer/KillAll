@@ -11,7 +11,7 @@ class Character {
      * @type {int}
      * hp reprensenting the health's point of the new character
      * @type {int}
-     * kill_number representing the number of fight won by the character
+     * kills representing the number of fight won by the character
      * @type {int}
      **/
     constructor(nickname, attack, defense, agility) {
@@ -20,7 +20,7 @@ class Character {
         this.defense = defense;
         this.agility = agility;
         this.hp = 10;
-        this.kill_number = 0;
+        this.kills = 0;
         this.listener = {
             update(str) {
                 this.string = str;
@@ -107,11 +107,11 @@ class Character {
             }
         }
         if (this.hp == 0){
-            Character.kill_number++;
+            Character.kills++;
             this.listener.update(Character.nickname+" tue son adversaire et  <span style='color: green'>REMPORTE LE COMBAT !!!!!!</span> Tout ca avec "+Character.hp+"hp restant.");
             this.listener.update(this.nickname+" <span style='color: darkred'>est mort....</span>");
         }else {
-            this.kill_number++;
+            this.kills++;
             this.listener.update(this.nickname+" tue son adversaire et  <span style='color: green'>REMPORTE LE COMBAT !!!!!!</span> Tout ca avec "+this.hp+"hp restant.");
             this.listener.update(Character.nickname+" <span style='color: darkred'>est mort....</span>");
         }
