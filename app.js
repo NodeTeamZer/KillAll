@@ -114,6 +114,8 @@ io.sockets.on('connection', function (socket, data) {
                 localStorage.setItem(idKey, result);
 
                 characterManager.loadUserCharacters(result, function(characters) {
+                    // TODO : Case if no characters.
+
                     socket.emit('ConnexionOk', characters);
                 });
             }

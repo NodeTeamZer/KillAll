@@ -36,7 +36,7 @@ $(function() {
         } 
     });
     
-    socket.on('connexionOk', function(data) {
+    socket.on('ConnexionOk', function(data) {
             if (data){
                 if (data.length > 0) {
                     const characterList = $("#characterList");
@@ -85,7 +85,7 @@ $(function() {
     $("#open-inscription").click(function(){
         $("#inscription").toggleClass("d-none");
         $("#connexion").addClass("d-none");
-    })
+    });
 
     // validation inscription form
     $("#inscriptionButton").click(function(){
