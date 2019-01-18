@@ -179,12 +179,36 @@ class CharacterManager extends MySQLManager {
     }
 
     /**
-     * From a request / response, checks the parameters given and return the list of characters for a specific user.
+     * From an id user, gets the list of characters associated and pass it to the callback method.
      * @param idUser The id of the user to load characters.
      * @param callback The callback function.
      */
-    loadUserCharacters(idUser, callback) {
+    loadUserCharacter(idUser, callback) {
         this.query = "SELECT * FROM `{0}` WHERE {1} = {2}"
+            .format(this.table,
+                this.fields[6],
+                this.connection.escape(idUser));
+        let result;
+
+        this.connection.query(this.query, function(error, results) {
+            if (error) {
+                console.log(error);
+
+                return;
+            }
+
+            callback(results);
+
+        });
+    }
+
+    /**
+     * From an id user, gets the list of characters not owned by him and pass it to the callback method.
+     * @param idUser The id of the user not to load characters.
+     * @param callback The callback function.
+     */
+    loadOtherCharacters(idUser, callback) {
+        this.query = "SELECT * FROM `{0}` WHERE {1} != {2}"
             .format(this.table,
                 this.fields[6],
                 this.connection.escape(idUser));
