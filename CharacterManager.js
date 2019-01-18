@@ -21,7 +21,7 @@ class CharacterManager extends MySQLManager {
          * Stores the this.fields from the character table.
          * @type {string[]}
          */
-        this.fields = ["id", "nickname", "attack", "defense", "agility", "kill", "id_user"];
+        this.fields = ["id", "nickname", "attack", "defense", "agility", "kills", "id_user"];
 
         /**
          * Define the default kill number field value for new characters.
