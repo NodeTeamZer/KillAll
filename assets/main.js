@@ -45,7 +45,7 @@ $(function() {
 
                     for (elt in data) {
                             const line = document.createElement("li");
-                            line.innerHTML = "<a href='#'>Nickname: {0} - Attack: {1} - Defense: {2} - Agility: {3} - Kills: {4}</a>"
+                            line.innerHTML = "<a href='#' class='character-list mt-2'><h2>🤴 {0}</h2> Attack: {1} - Defense: {2} - Agility: {3} - Kills: {4}</a>"
                                 .format(data[elt].nickname,
                                     data[elt].attack,
                                     data[elt].defense,
@@ -69,12 +69,14 @@ $(function() {
                 });
 
                 // points manager
-                $("#boutonPoint").click(function() {
-                    let point = 15 - Number($('#attaque').val()) - Number($('#defense').val()) - Number($('#agilite').val());
+                $("#boutonPoint").click(function(event) {
+		    event.preventDefault();
+                    let point = 15 - Number($('input[id="attack"]').val()) - Number($('input[id="defense"]').val()) - Number($('input[id="agility"]').val());
+		console.log(point);
                     if (point > 0){
-                        $("#pointLeft").html("il vous reste "+point+" point(s). Voulez vous vraiment lancer la partie?? <input type='submit' id='start' value='Commencer la partie' onclick='combat()'>");
+		M.toast({html: "il vous reste "+point+" point(s). Voulez vous vraiment lancer la partie??<input class='ml-3 btn orange darken-3 waves-effect waves-light btn-large' type='submit' id='start' value='Commencer la partie' onclick='combat()'>"});
                     }else if (point < 0) {
-                        $("#pointLeft").html("Désolé vous ne pouvez pas dépasser 15 points de statistique.");
+                        M.toast({html: "Désolé, vous ne pouvez pas dépasser 15 points de statistique."});
                     }else if ($('#name').val() == "") {
                         $('#name-alert').remove();
                         $('#name').after('<div id="name-alert" class="alert alert-danger">Veuillez renseigner votre nom</div>');
