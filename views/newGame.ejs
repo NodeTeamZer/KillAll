@@ -15,6 +15,8 @@
         <input type="text" id="passwordInscription" required>
     <a class="btn btn-secondary" id="inscriptionButton">Valider mon inscription</a>
     </form>
+    <ul id="characterList"></ul>
+    <p id="noCharacter"></p>
     <button class="btn btn-secondary mt-3 d-none" id="open-form">Nouvelle partie</button>
     <form action="/combat" method="POST" id="new-champ-form" class="d-none">
         <div>
@@ -32,7 +34,7 @@
     <a class="btn btn-secondary" id="boutonPoint">Valider mes points</a>
     </form>
     <div id="pointLeft"></div>
-    </div>
+    </ul>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="/main.js"></script> 

@@ -54,6 +54,8 @@ class UserManager extends MySQLManager {
 
                 res.json({result: "User successfully inserted."});
             });
+
+            this.connection.end();
         }
     }
 
@@ -82,6 +84,8 @@ class UserManager extends MySQLManager {
 
                 console.log("User successfully inserted.");
             });
+
+            this.connection.end();
         }
     }
 
@@ -110,6 +114,8 @@ class UserManager extends MySQLManager {
                 callback(results);
             }
         });
+
+        this.connection.end();
     }
 
     /**
@@ -137,6 +143,8 @@ class UserManager extends MySQLManager {
 
                 callback(results[0].id);
             });
+
+            this.connection.end();
         }
     }
 }
