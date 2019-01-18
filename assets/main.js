@@ -38,54 +38,40 @@ $(function() {
     });
     
     socket.on('ConnexionOk', function(data) {
-            if (data){
-		M.toast({html: 'Bienvenue !'})
-                if (data.length > 0) {
-                    const characterList = $("#characterList");
-
-                    for (elt in data) {
-                            const line = document.createElement("li");
-                            line.innerHTML = "<a href='#' class='character-list mt-2'><h2>🤴 {0}</h2> Attack: {1} - Defense: {2} - Agility: {3} - Kills: {4}</a>"
-                                .format(data[elt].nickname,
-                                    data[elt].attack,
-                                    data[elt].defense,
-                                    data[elt].agility,
-                                    data[elt].kills);
-
-                            characterList.append(line);
-                    }
-                }
-                $("#open-connexion").addClass("d-none");
-                $("#connexion").addClass("d-none");
-                $("#open-inscription").addClass("d-none");
-                // display new game button
-                $("#open-form").removeClass("d-none");
+       if (!data){
+	   M.toast({html: 'Bienvenue !'})
+           $("#open-connexion").addClass("d-none");
+           $("#connexion").addClass("d-none")
+           $("#open-inscription").addClass("d-none");
+           // display new game button
+           $("#open-form").removeClass("d-none");
                 // open new game form on button click
-                $("#open-form").click(function() {
-		    $([document.documentElement, document.body]).animate({
+           $("#open-form").click(function() {
+		        $([document.documentElement, document.body]).animate({
 				scrollTop: $("#open-form").offset().top
-		    }, 2000);
+		        }, 2000);
                     $("#new-champ-form").toggleClass("d-none");
                 });
 
-                // points manager
-                $("#boutonPoint").click(function(event) {
-		    event.preventDefault();
-                    let point = 15 - Number($('input[id="attack"]').val()) - Number($('input[id="defense"]').val()) - Number($('input[id="agility"]').val());
-		console.log(point);
-                    if (point > 0){
-		M.toast({html: "il vous reste "+point+" point(s). Voulez vous vraiment lancer la partie??<input class='ml-3 btn orange darken-3 waves-effect waves-light btn-large' type='submit' id='start' value='Commencer la partie' onclick='combat()'>"});
-                    }else if (point < 0) {
-                        M.toast({html: "Désolé, vous ne pouvez pas dépasser 15 points de statistique."});
-                    }else if ($('#name').val() == "") {
-                        $('#name-alert').remove();
-                        $('#name').after('<div id="name-alert" class="alert alert-danger">Veuillez renseigner votre nom</div>');
-                    }else {
-                        $('#new-champ-form').submit();
-                    }
-                });
+           // points manager
+           $("#boutonPoint").click(function(event) {
+		   event.preventDefault();
+           let point = 15 - Number($('input[id="attack"]').val()) - Number($('input[id="defense"]').val()) - Number($('input[id="agility"]').val());
+            if (point > 0){
+		        M.toast({html: "il vous reste "+point+" point(s). Voulez vous vraiment lancer la partie??<input class='ml-3 btn orange darken-3 waves-effect waves-light btn-large' type='submit' id='start' value='Commencer la partie' onclick='combat()'>"});
+            } else if (point < 0) {
+                M.toast({html: "Désolé, vous ne pouvez pas dépasser 15 points de statistique."});
+            } else if ($('#name').val() == "") {
+                $('#name-alert').remove();
+                $('#name').after('<div id="name-alert" class="alert alert-danger">Veuillez renseigner votre nom</div>');
+            } else {
+                $('#new-champ-form').submit();
             }
-    });
+            });
+       } else {
+            window.location.href = "/combat";
+       }
+    })
     
     // open new inscription form
     $("#open-inscription").click(function(){

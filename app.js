@@ -69,6 +69,8 @@ const UserManager = require("./UserManager.js");
 const characterManager = new CharacterManager();
 const userManager = new UserManager();
 const idKey = "{0}".format(userManager.fields[0]);
+// TODO : Securize by checking if exists (compare values from db) when getting the value.
+const characterKey = "selected";
 
 // Defining the different character CRUD events depending on the method send to the route.
 router.route("/api/characters").post(function(req, res){
@@ -84,23 +86,38 @@ router.route("/api/characters").post(function(req, res){
 app.get('/', function(req, res){
 	res.render('newGame.ejs', {title:"KillEmAll!"})
 });
-app.get('/combat', function(req, res) {
-	res.redirect('/');
-});
+
 app.post('/combat', function(req, res) {
 	if (req.body.user_name) {
-		console.log(req.body);
 		res.render('combat.ejs', {
 			title:"combat - KillEmAll!"
 			,user_name: req.body.user_name
 			,user_attack_points: req.body.attack_points
 			,user_defense_points: req.body.defense_points
-			,user_agility_points: req.body.agility_points 
+			,user_agility_points: req.body.agility_points
 		});
 	} else {
 		res.redirect('/');
 	}
 });
+
+app.get('/combat', function(req, res) {
+    // TODO : Check the character validity into DB.
+    let character = localStorage.getItem(characterKey);
+
+    if (character) {
+        res.render('combat.ejs', {
+            title:"combat - KillEmAll!"
+            ,user_name: character.nickname
+            ,user_attack_points: character.attack
+            ,user_defense_points: character.defense
+            ,user_agility_points: character.agility
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
 io.sockets.on('connection', function (socket, data) {
     socket.on('NewConnexion', function(data) {
         let dataC = JSON.parse(data);
@@ -113,10 +130,14 @@ io.sockets.on('connection', function (socket, data) {
             } else {
                 localStorage.setItem(idKey, result);
 
-                characterManager.loadUserCharacters(result, function(characters) {
+                characterManager.loadUserCharacter(result, function(character) {
                     // TODO : Case if no characters.
+                    if (character) {
+                        console.log(character);
+                        localStorage.setItem(characterKey, character);
+                    }
 
-                    socket.emit('ConnexionOk', characters);
+                    socket.emit('ConnexionOk', character);
                 });
             }
         });
@@ -155,6 +176,11 @@ io.sockets.on('connection', function (socket, data) {
         let id_winner = player1.fight(player2);
         characterManager.increaseKills(id_winner);
         socket.emit("FightText", player1.listener.getString());
+
+    socket.on('FightPage', function() {
+        characterManager.loadOtherCharacters(localStorage.getItem(idKey), function(result) {
+            socket.emit("EnemiesFound", result);
+        });
     })
 });
 

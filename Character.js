@@ -32,6 +32,19 @@ class Character {
             }
         };
     }
+
+    /**
+     * Initializes a Character object from the result of a database query.
+     * @param queryResult The query.
+     */
+    initFromQuery(queryResult) {
+        this.nickname = queryResult.nickname;
+        this.attack = queryResult.attack;
+        this.defense = queryResult.defense;
+        this.agility = queryResult.agility;
+        this.hp = 10;
+        this.kills = queryResult.kills;
+    }
     
     /**
      * return a random number beetween 1 and 9
