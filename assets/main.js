@@ -4,6 +4,7 @@ $(function() {
     // open new connexion form
     $("#open-connexion").click(function(){
         $("#connexion").toggleClass("d-none");
+        $("#inscription").addClass("d-none");
     });
     
     // validation connexion form
@@ -24,12 +25,11 @@ $(function() {
     
     socket.on('connexionOk', function(data) {
             if (data){
-                $("#open-connexion").toggleClass("d-none");
-                $("#connexion").toggleClass("d-none");
-                $("#open-inscription").toggleClass("d-none");
-                $("#inscription").toggleClass("d-none");
+                $("#open-connexion").addClass("d-none");
+                $("#connexion").addClass("d-none");
+                $("#open-inscription").addClass("d-none");
                 // display new game button
-                $("#open-form").toggleClass("d-none");
+                $("#open-form").removeClass("d-none");
                 // open new game form on button click
                 $("#open-form").click(function() {
                     $("#new-champ-form").toggleClass("d-none");
@@ -55,6 +55,7 @@ $(function() {
     // open new inscription form
     $("#open-inscription").click(function(){
         $("#inscription").toggleClass("d-none");
+        $("#connexion").addClass("d-none");
     })
     // validation inscription form
     $("#inscriptionButton").click(function(){
@@ -71,3 +72,4 @@ $(function() {
 			$('#passwordInscription').after('<div id="passwordInscription-alert" class="alert alert-danger">Veuillez renseigner votre mot de passe.</div>');
         } 
     });
+});
