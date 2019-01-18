@@ -1,9 +1,10 @@
 <% include header.ejs %>
 <div class="container">
-<div class="row justify-content-around mt-3">
-    <button class="btn grey darken-1 waves-effect waves-light btn-large" id="open-connexion">Connection</button>
-    <button class="btn grey darken-1 waves-effect waves-light btn-large" id="open-inscription">Inscription</button>
-    <button class="btn grey darken-1 waves-effect waves-light btn-large d-none" id="open-form">Nouvelle partie</button>
+<img src="/fantasy-img.jpg" class="home-image d-block mx-auto mt-4">
+<div class="row justify-content-around mt-5">
+    <button class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="open-connexion">Connection</button>
+    <button class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="open-inscription">Inscription</button>
+    <button class="btn deep-orange darken-4 waves-effect waves-light btn-large d-none" id="open-form">Nouvelle partie</button>
 </div>
 <div class="row mt-4">
     <form action="/combat" method="POST" id="new-champ-form" class="d-none m-auto">
@@ -24,7 +25,7 @@
 		<input id="agility" name="agility_points" type="number" value="5" min="1" max="9">
 		<label for="agility">Valeur d'<strong>agilité</strong> de votre champion: </label>
         </div>
-    <a class="btn orange darken-3 waves-effect waves-light btn-large" id="boutonPoint">Valider mes points ⚔️</a>
+    <button type="submit" class="btn orange darken-3 waves-effect waves-light btn-large" id="boutonPoint">Valider mes points ⚔️</button>
     </form>
     <ul id="characterList"></ul>
     <form id="inscription" class="d-none m-auto">
@@ -33,10 +34,10 @@
 		<label for="loginInscription">Choisissez votre identifiant: </label>
 	</div>
 	<div class="input-field">
-		<input type="text" id="passwordInscription" required>
+		<input type="password" id="passwordInscription" required>
 		<label for="passwordInscription">Choisissez votre mot de passe: </label>
 	</div>
-    <a class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="inscriptionButton">Valider mon inscription</a>
+    <button type="submit" class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="inscriptionButton">Valider mon inscription</button>
     </form>
     <form id="connexion" class="d-none m-auto">
 	<div class="input-field">
@@ -44,10 +45,10 @@
 		<label for="login">Identifiant: </label>
 	</div>
 	<div class="input-field">
+		<input type="password" id="password" required>
 		<label for="password">Mot de passe: </label>
-		<input type="text" id="password" required>
 	</div>
-    <a class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="connexionButton">Au combat!!</a>
+    <button type="submit" class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="connexionButton">Au combat!!</button>
     </form>
 </div>
     <div id="pointLeft" class="text-center"></div>

@@ -24,7 +24,7 @@ class MySQLManager {
         this.connection = mysql.createConnection({
             host : 'localhost',
             user : 'root',
-            password : 'root',
+            password : '',
             port: 8889,
             database : 'killall'
         });

@@ -41,3 +41,20 @@ strong {
     font-weight: 700;
     color: #444;
 }
+
+.input-field input:focus + label {
+     color: #bf360c !important;
+}
+.input-field input:focus {
+     border-bottom: 1px solid #bf360c !important;
+     box-shadow: 0 1px 0 0 #bf360c !important;
+}
+
+.row::after {
+    content: unset;
+}
+
+.home-image {
+    max-width: 100%;
+    max-height: 400px;
+}
