@@ -21,6 +21,15 @@ class Character {
         this.agility = agility;
         this.hp = 10;
         this.kill_number = 0;
+        this.listener = {
+            update(str) {
+                this.string = str;
+            },
+
+            getString() {
+                return this.string;
+            }
+        };
     }
     
     /**
@@ -43,10 +52,13 @@ class Character {
     actionAttack(){
         let agility = this.dice();
         if (agility <= this.agility){  // agility test
+            this.listener.update(this.nickname+" tente d'attaquer !!")
             let attack = this.dice();   
             if (attack <= this.attack){  // attack test
+                this.listener.update(this.nickname+" <span style='color: gold'>réussit son attaque !!</span>")
                 return true;
             }else{
+                this.listener.update(this.nickname+" <span style='color: tomato'>échoue dans son attaque...</span>")
                 return false;
             }
         }
@@ -62,7 +74,10 @@ class Character {
     actionDefense(){
         let defense = this.dice();
         if (defense > this.defense){  // defense test
+            this.listener.update(this.nickname+" ne parvient pas à défendre et <strong>perd 1 point de vie !!</strong> Il lui reste "+this.hp)
             this.hp--;                // loose 1hp
+        }else{
+            this.listener.update(this.nickname+" <span style='color: skyblue'>parvient à bloquer l'attaque !!</span>")
         }
     }
     
@@ -92,8 +107,12 @@ class Character {
         }
         if (this.hp == 0){
             Character.kill_number++;
+            this.listener.update(Character.nickname+" tue son adversaire et  <span style='color: green'>REMPORTE LE COMBAT !!!!!!</span> Tout ca avec "+Character.hp+"hp restant.");
+            this.listener.update(this.nickname+" <span style='color: darkred'>est mort....</span>");
         }else {
             this.kill_number++;
+            this.listener.update(this.nickname+" tue son adversaire et  <span style='color: green'>REMPORTE LE COMBAT !!!!!!</span> Tout ca avec "+this.hp+"hp restant.");
+            this.listener.update(Character.nickname+" <span style='color: darkred'>est mort....</span>");
         }
         this.hp = 10;                               
         Character.hp = 10;                          //both players recover there hp

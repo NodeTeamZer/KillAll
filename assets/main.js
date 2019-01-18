@@ -71,4 +71,3 @@ $(function() {
 			$('#passwordInscription').after('<div id="passwordInscription-alert" class="alert alert-danger">Veuillez renseigner votre mot de passe.</div>');
         } 
     });
-});

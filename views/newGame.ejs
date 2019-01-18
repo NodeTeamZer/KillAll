@@ -1,40 +1,53 @@
 <% include header.ejs %>
-    <button class="btn btn-secondary mt-3" id="open-connexion">Connection</button>
-    <form id="connexion" class="d-none">
-        <label for="login">Identifiant: </label>
-        <input type="text" id="login" required>
-        <label for="password">Mot de passe: </label>
-        <input type="text" id="password" required>
-    <a class="btn btn-secondary" id="connexionButton">Au combat!!</a>
+<div class="container">
+<div class="row justify-content-around mt-3">
+    <button class="btn grey darken-1 waves-effect waves-light btn-large" id="open-connexion">Connection</button>
+    <button class="btn grey darken-1 waves-effect waves-light btn-large" id="open-inscription">Inscription</button>
+    <button class="btn grey darken-1 waves-effect waves-light btn-large" id="open-form">Nouvelle partie</button>
+</div>
+<div class="row mt-4">
+    <form action="/combat" method="POST" id="new-champ-form" class="d-none m-auto">
+        <div class="input-field">
+            <input type="text" id="name" name="user_name" required>
+            <label for="name">Nom de votre champion:</label>
+        </div>
+        <p>Vous avez 15 points à placer selon votre convenance. 1 point minimum et 9 maximum par statistique.</p>
+        <div class="input-field">
+		<input id="attack" name="attack_points" type="number" value="5" min="1" max="9">
+		<label for="attack">Valeur d'<strong>attaque</strong> de votre champion: </label>
+        </div>
+        <div class="input-field">
+		<input id="defense" name="defense_points" type="number" value="5" min="1" max="9">
+		<label for="defense">Valeur de <strong>défense</strong> de votre champion: </label>
+        </div>
+        <div class="input-field">
+		<input id="agility" name="agility_points" type="number" value="5" min="1" max="9">
+		<label for="agility">Valeur d'<strong>agilité</strong> de votre champion: </label>
+        </div>
+        
+    <a class="btn grey darken-1 waves-effect waves-light btn-large" id="boutonPoint">Valider mes points</a>
     </form>
-    <button class="btn btn-secondary mt-3" id="open-inscription">Inscription</button>
-    <form id="inscription" class="d-none">
+    <form id="inscription" class="d-none m-auto">
         <label for="loginInscription">Choisissez votre identifiant: </label>
         <input type="text" id="loginInscription" required>
         <label for="passwordInscription">Choisissez votre mot de passe: </label>
         <input type="text" id="passwordInscription" required>
-    <a class="btn btn-secondary" id="inscriptionButton">Valider mon inscription</a>
+    <a class="btn grey darken-1 waves-effect waves-light btn-large" id="inscriptionButton">Valider mon inscription</a>
     </form>
-    <button class="btn btn-secondary mt-3 d-none" id="open-form">Nouvelle partie</button>
-    <form action="/combat" method="POST" id="new-champ-form" class="d-none">
-        <div>
-            <label for="name">Nom de votre champion:</label>
-            <input type="text" id="name" name="user_name" required>
-        </div>
-        <p>Vous avez 15 points à placer selon votre convenance. 1 point minimum et 9 maximum par statistique.</p>
-        <label>Valeur d'<strong>attaque</strong> de votre champion: </label>
-        <input id="attack" name="attack_points" type="number" value="5" min="1" max="9">
-        <label>Valeur de <strong>défense</strong> de votre champion: </label>
-        <input id="defense" name="defense_points" type="number" value="5" min="1" max="9">
-        <label>Valeur d'<strong>agilité</strong> de votre champion: </label>
-        <input id="agility" name="agility_points" type="number" value="5" min="1" max="9">
-        
-    <a class="btn btn-secondary" id="boutonPoint">Valider mes points</a>
+    <form id="connexion" class="d-none m-auto">
+        <label for="login">Identifiant: </label>
+        <input type="text" id="login" required>
+        <label for="password">Mot de passe: </label>
+        <input type="text" id="password" required>
+    <a class="btn grey darken-1 waves-effect waves-light btn-large" id="connexionButton">Au combat!!</a>
     </form>
+</div>
     <div id="pointLeft"></div>
-    </div>
+</div>
+</div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="/main.js"></script> 
     </body>
 </html>
