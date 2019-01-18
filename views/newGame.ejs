@@ -1,5 +1,6 @@
 <% include header.ejs %>
 <div class="container">
+<img src="/fantasy-img.jpg" class="home-image d-block mx-auto mt-4">
 <div class="row justify-content-around mt-5">
     <button class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="open-connexion">Connection</button>
     <button class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="open-inscription">Inscription</button>
@@ -24,7 +25,7 @@
 		<input id="agility" name="agility_points" type="number" value="5" min="1" max="9">
 		<label for="agility">Valeur d'<strong>agilité</strong> de votre champion: </label>
         </div>
-    <a class="btn orange darken-3 waves-effect waves-light btn-large" id="boutonPoint">Valider mes points ⚔️</a>
+    <button type="submit" class="btn orange darken-3 waves-effect waves-light btn-large" id="boutonPoint">Valider mes points ⚔️</button>
     </form>
     <ul id="characterList"></ul>
     <form id="inscription" class="d-none m-auto">
@@ -36,7 +37,7 @@
 		<input type="password" id="passwordInscription" required>
 		<label for="passwordInscription">Choisissez votre mot de passe: </label>
 	</div>
-    <a class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="inscriptionButton">Valider mon inscription</a>
+    <button type="submit" class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="inscriptionButton">Valider mon inscription</button>
     </form>
     <form id="connexion" class="d-none m-auto">
 	<div class="input-field">
@@ -47,7 +48,7 @@
 		<input type="password" id="password" required>
 		<label for="password">Mot de passe: </label>
 	</div>
-    <a class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="connexionButton">Au combat!!</a>
+    <button type="submit" class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="connexionButton">Au combat!!</button>
     </form>
 </div>
     <div id="pointLeft" class="text-center"></div>
