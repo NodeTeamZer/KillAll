@@ -112,7 +112,6 @@ io.sockets.on('connection', function (socket, data) {
                 localStorage.setItem(idKey, result);
 
                 characterManager.loadUserCharacters(result, function(characters) {
-                    console.log(characters);
                     socket.emit('ConnexionOk', characters);
                 });
             }
