@@ -1,9 +1,9 @@
 <% include header.ejs %>
 <div class="container">
-<div class="row justify-content-around mt-3">
-    <button class="btn grey darken-1 waves-effect waves-light btn-large" id="open-connexion">Connection</button>
-    <button class="btn grey darken-1 waves-effect waves-light btn-large" id="open-inscription">Inscription</button>
-    <button class="btn grey darken-1 waves-effect waves-light btn-large d-none" id="open-form">Nouvelle partie</button>
+<div class="row justify-content-around mt-5">
+    <button class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="open-connexion">Connection</button>
+    <button class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="open-inscription">Inscription</button>
+    <button class="btn deep-orange darken-4 waves-effect waves-light btn-large d-none" id="open-form">Nouvelle partie</button>
 </div>
 <div class="row mt-4">
     <form action="/combat" method="POST" id="new-champ-form" class="d-none m-auto">
@@ -44,8 +44,8 @@
 		<label for="login">Identifiant: </label>
 	</div>
 	<div class="input-field">
-		<label for="password">Mot de passe: </label>
 		<input type="password" id="password" required>
+		<label for="password">Mot de passe: </label>
 	</div>
     <a class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="connexionButton">Au combat!!</a>
     </form>

@@ -36,7 +36,7 @@ $(function() {
         } 
     });
     
-    socket.on('connexionOk', function(data) {
+    socket.on('ConnexionOk', function(data) {
             if (data){
                 if (data.length > 0) {
                     const characterList = $("#characterList");
