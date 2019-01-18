@@ -85,7 +85,7 @@ $(function() {
     $("#open-inscription").click(function(){
         $("#inscription").toggleClass("d-none");
         $("#connexion").addClass("d-none");
-    })
+    });
 
     // validation inscription form
     $("#inscriptionButton").click(function(){
