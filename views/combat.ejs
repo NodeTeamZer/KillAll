@@ -3,13 +3,18 @@
 			<p>combat</p>
 			<p><%= user_name %></p>
 		</div>
+	<ul id="enemyList"></ul>
 	</div>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/main.js"></script> 
-	<script src="/ejs.js"></script>
 	<script>
 		let socket = io.connect('http://localhost:3000');
+		socket.emit("FightPage");
+
+		socket.on("EnemiesFound", function(data) {
+            console.log(data);
+        })
 		let user_data = {
 				user_name : '<%= user_name %>'
 				, user_attack_points : '<%= user_attack_points %>'

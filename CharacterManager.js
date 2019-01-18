@@ -183,7 +183,7 @@ class CharacterManager extends MySQLManager {
      * @param idUser The id of the user to load characters.
      * @param callback The callback function.
      */
-    loadUserCharacters(idUser, callback) {
+    loadUserCharacter(idUser, callback) {
         this.query = "SELECT * FROM `{0}` WHERE {1} = {2}"
             .format(this.table,
                 this.fields[6],
@@ -208,7 +208,7 @@ class CharacterManager extends MySQLManager {
      * @param callback The callback function.
      */
     loadOtherCharacters(idUser, callback) {
-        this.query = "SELECT * FROM `{0}` WHERE {1} =! {2}"
+        this.query = "SELECT * FROM `{0}` WHERE {1} != {2}"
             .format(this.table,
                 this.fields[6],
                 this.connection.escape(idUser));

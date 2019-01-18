@@ -20,7 +20,7 @@ class Character {
         this.defense = defense;
         this.agility = agility;
         this.hp = 10;
-        this.kill_number = 0;
+        this.kills = 0;
         this.listener = {
             update(str) {
                 this.string = str;
@@ -30,6 +30,19 @@ class Character {
                 return this.string;
             }
         };
+    }
+
+    /**
+     * Initializes a Character object from the result of a database query.
+     * @param queryResult The query.
+     */
+    initFromQuery(queryResult) {
+        this.nickname = queryResult.nickname;
+        this.attack = queryResult.attack;
+        this.defense = queryResult.defense;
+        this.agility = queryResult.agility;
+        this.hp = 10;
+        this.kills = queryResult.kills;
     }
     
     /**
