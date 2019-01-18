@@ -12,7 +12,7 @@
             <label for="name">Nom de votre champion:</label>
         </div>
         <p>Vous avez 15 points à placer selon votre convenance. 1 point minimum et 9 maximum par statistique.</p>
-        <div class="input-field">
+        <div class="input-field mt-5">
 		<input id="attack" name="attack_points" type="number" value="5" min="1" max="9">
 		<label for="attack">Valeur d'<strong>attaque</strong> de votre champion: </label>
         </div>
@@ -24,25 +24,33 @@
 		<input id="agility" name="agility_points" type="number" value="5" min="1" max="9">
 		<label for="agility">Valeur d'<strong>agilité</strong> de votre champion: </label>
         </div>
-    <a class="btn grey darken-1 waves-effect waves-light btn-large" id="boutonPoint">Valider mes points</a>
+    <a class="btn orange darken-3 waves-effect waves-light btn-large" id="boutonPoint">Valider mes points ⚔️</a>
     </form>
     <ul id="characterList"></ul>
     <form id="inscription" class="d-none m-auto">
-        <label for="loginInscription">Choisissez votre identifiant: </label>
-        <input type="text" id="loginInscription" required>
-        <label for="passwordInscription">Choisissez votre mot de passe: </label>
-        <input type="text" id="passwordInscription" required>
-    <a class="btn grey darken-1 waves-effect waves-light btn-large" id="inscriptionButton">Valider mon inscription</a>
+	<div class="input-field">
+		<input type="text" id="loginInscription" required>
+		<label for="loginInscription">Choisissez votre identifiant: </label>
+	</div>
+	<div class="input-field">
+		<input type="text" id="passwordInscription" required>
+		<label for="passwordInscription">Choisissez votre mot de passe: </label>
+	</div>
+    <a class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="inscriptionButton">Valider mon inscription</a>
     </form>
     <form id="connexion" class="d-none m-auto">
-        <label for="login">Identifiant: </label>
-        <input type="text" id="login" required>
-        <label for="password">Mot de passe: </label>
-        <input type="text" id="password" required>
-    <a class="btn grey darken-1 waves-effect waves-light btn-large" id="connexionButton">Au combat!!</a>
+	<div class="input-field">
+		<input type="text" id="login" required>
+		<label for="login">Identifiant: </label>
+	</div>
+	<div class="input-field">
+		<label for="password">Mot de passe: </label>
+		<input type="text" id="password" required>
+	</div>
+    <a class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="connexionButton">Au combat!!</a>
     </form>
 </div>
-    <div id="pointLeft"></div>
+    <div id="pointLeft" class="text-center"></div>
 </div>
 </div>
     <script src="/socket.io/socket.io.js"></script>
