@@ -21,19 +21,13 @@ class CharacterManager extends MySQLManager {
          * Stores the this.fields from the character table.
          * @type {string[]}
          */
-        this.fields = ["id", "nickname", "attack", "defense", "agility", "kill_number", "id_user"];
+        this.fields = ["id", "nickname", "attack", "defense", "agility", "kill", "id_user"];
 
         /**
          * Define the default kill number field value for new characters.
          * @type {number}
          */
         this.defaultKillNumber = 0;
-
-        /**
-         * Defines the default character heath points.
-         * @type {number}
-         */
-        this.defaultHP = 10;
     }
 
     /**
@@ -75,6 +69,8 @@ class CharacterManager extends MySQLManager {
 
                 res.json({result: "Character successfully inserted."});
             });
+
+            this.connection.end();
         }
     }
 
@@ -130,6 +126,8 @@ class CharacterManager extends MySQLManager {
 
                     res.json(jsonResult);
                 });
+
+                this.connection.end();
             });
         }
     }
@@ -177,6 +175,8 @@ class CharacterManager extends MySQLManager {
 
                 console.log("Character successfully inserted.");
             });
+
+            this.connection.end();
         }
     }
 
@@ -188,11 +188,11 @@ class CharacterManager extends MySQLManager {
     loadUserCharacters(idUser, callback) {
         this.query = "SELECT * FROM `{0}` WHERE {1} = {2}"
             .format(this.table,
-                this.fields[7],
+                this.fields[6],
                 this.connection.escape(idUser));
         let result;
 
-        this.connection.query(this.query, function (error, results) {
+        this.connection.query(this.query, function(error, results) {
             if (error) {
                 console.log(error);
 
@@ -201,6 +201,8 @@ class CharacterManager extends MySQLManager {
 
             callback(results);
         });
+
+        this.connection.end();
     }
 
     /**
@@ -221,6 +223,8 @@ class CharacterManager extends MySQLManager {
                 console.log(error);
             }
         });
+
+        this.connection.end();
     }
 }
 

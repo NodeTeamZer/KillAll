@@ -14,7 +14,7 @@ class Character {
      * kill_number representing the number of fight won by the character
      * @type {int}
      **/
-    constructor(nickname, attack, defense, agility){
+    constructor(nickname, attack, defense, agility) {
         this.nickname = nickname;
         this.attack = attack;
         this.defense = defense;
@@ -51,6 +51,7 @@ class Character {
      **/
     actionAttack(){
         let agility = this.dice();
+
         if (agility <= this.agility){  // agility test
             this.listener.update(this.nickname+" tente d'attaquer !!")
             let attack = this.dice();   
@@ -117,5 +118,4 @@ class Character {
         this.hp = 10;                               
         Character.hp = 10;                          //both players recover there hp
     }
-    
 }

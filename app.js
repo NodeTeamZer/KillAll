@@ -110,7 +110,10 @@ io.sockets.on('connection', function (socket, data) {
         userManager.authenticate(loginConnexion, passwordConnexion, function (result) {
             if (result != null) { 
                 localStorage.setItem(idKey, result);
-                socket.emit('connexionOk', result);
+
+                characterManager.loadUserCharacters(result, function(characters) {
+                    socket.emit('ConnexionOk', characters);
+                });
             }
         });
         

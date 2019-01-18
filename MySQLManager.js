@@ -25,6 +25,7 @@ class MySQLManager {
             host : 'localhost',
             user : 'root',
             password : '',
+            //port: 3306,
             port: 3306,
             database : 'killall'
         });
@@ -58,6 +59,8 @@ class MySQLManager {
 
             res.json({result: results});
         });
+
+        this.connection.end();
     }
 
     /**
@@ -103,6 +106,8 @@ class MySQLManager {
 
                 res.json(jsonResult);
             });
+
+            this.connection.end();
         }
     }
 
