@@ -75,8 +75,8 @@ class Character {
     actionDefense(){
         let defense = this.dice();
         if (defense > this.defense){  // defense test
-            this.listener.update(this.nickname+" ne parvient pas à défendre et <strong>perd 1 point de vie !!</strong> Il lui reste "+this.hp)
             this.hp--;                // loose 1hp
+            this.listener.update(this.nickname+" ne parvient pas à défendre et <strong>perd 1 point de vie !!</strong> Il lui reste "+this.hp);
         }else{
             this.listener.update(this.nickname+" <span style='color: skyblue'>parvient à bloquer l'attaque !!</span>")
         }
@@ -89,7 +89,7 @@ class Character {
      **/
     fight(Character){
         let heads = Math.random();
-        while(this.hp > 0 || Character.hp > 0){     // while both characters have more than 0hp
+        while(this.hp > 0 && Character.hp > 0){     // while both characters have more than 0hp
             if (heads < 0,5){                       // heads or tails to know who start
                 if (this.actionAttack()){           // player1 tries to attack
                     Character.actionDefense();      // player2 tries to defend himself
