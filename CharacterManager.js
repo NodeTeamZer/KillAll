@@ -70,7 +70,7 @@ class CharacterManager extends MySQLManager {
                 res.json({result: "Character successfully inserted."});
             });
 
-            this.connection.end();
+
         }
     }
 
@@ -127,7 +127,7 @@ class CharacterManager extends MySQLManager {
                     res.json(jsonResult);
                 });
 
-                this.connection.end();
+
             });
         }
     }
@@ -169,14 +169,12 @@ class CharacterManager extends MySQLManager {
             this.connection.query(this.query, function (error) {
                 if (error) {
                     console.log(error);
-
-                    return;
+                } else {
+                    console.log("Character successfully inserted.");
                 }
 
-                console.log("Character successfully inserted.");
-            });
 
-            this.connection.end();
+            });
         }
     }
 
@@ -200,9 +198,8 @@ class CharacterManager extends MySQLManager {
             }
 
             callback(results);
-        });
 
-        this.connection.end();
+        });
     }
 
     /**
@@ -222,9 +219,9 @@ class CharacterManager extends MySQLManager {
             if (error) {
                 console.log(error);
             }
-        });
 
-        this.connection.end();
+
+        });
     }
 }
 

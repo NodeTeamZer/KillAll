@@ -16,7 +16,6 @@
 				, user_defense_points : '<%= user_defense_points %>'
 				, user_agility_points : '<%= user_agility_points %>'
 		 };
-		console.log(user_data);
 		socket.emit('NewPlayer', user_data);
 	</script>
     </body>
