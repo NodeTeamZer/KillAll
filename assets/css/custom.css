@@ -16,7 +16,7 @@ body {
 }
 
 .navbar{
-	background-color: #7A3906;
+	background-color: #ef6c00;
 }
 
 label, .input-field > label {
@@ -29,4 +29,15 @@ a:not([href]):not([tabindex]) {
 
 a:hover {
 	color: white;
+}
+
+p, button, body {
+    font-family: 'Acme', cursive;
+    color : #424242;
+    font-weight: 600;
+}
+
+strong {
+    font-weight: 700;
+    color: #444;
 }
