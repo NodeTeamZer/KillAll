@@ -87,27 +87,6 @@ $(function() {
             }
     });
     
-<<<<<<< HEAD
-    $("#open-form-perso").click(function() {
-        $("#new-champ-form").toggleClass("d-none");
-        $("#boutonPoint").click(function() {
-            let point = 15 - Number($('#attaque').val()) - Number($('#defense').val()) - Number($('#agilite').val());
-            if (point > 0){
-                $("#pointLeft").html("il vous reste "+point+" point(s). Voulez vous vraiment lancer la partie?? <input type='submit' id='start' value='Commencer la partie' onclick='combat()'>");
-            }else if (point < 0) {
-                $("#pointLeft").html("Désolé vous ne pouvez pas dépasser 15 points de statistique.");
-            }else if ($('#name').val() == "") {
-                $('#name-alert').remove();
-                $('#name').after('<div id="name-alert" class="alert alert-danger">Veuillez renseigner votre nom</div>');
-            }else {
-                $('#new-champ-form').submit();
-            }
-        });
-    });
-
-=======
->>>>>>> b3f12634a7d2460ab887ec989f59c07a8237ebe6
-    
     // open new inscription form
     $("#open-inscription").click(function(){
         $("#inscription").toggleClass("d-none");

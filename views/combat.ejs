@@ -1,25 +1,4 @@
 <% include header.ejs %>
-<button class="btn deep-orange darken-4 waves-effect waves-light btn-large" id="open-form-perso">Créer un nouveau personnage</button>
-<form action="/combat" method="POST" id="new-champ-form" class="d-none m-auto">
-        <div class="input-field">
-            <input type="text" id="name" name="user_name" required>
-            <label for="name">Nom de votre champion:</label>
-        </div>
-        <p>Vous avez 15 points à placer selon votre convenance. 1 point minimum et 9 maximum par statistique.</p>
-        <div class="input-field mt-5">
-		<input id="attack" name="attack_points" type="number" value="5" min="1" max="9">
-		<label for="attack">Valeur d'<strong>attaque</strong> de votre champion: </label>
-        </div>
-        <div class="input-field">
-		<input id="defense" name="defense_points" type="number" value="5" min="1" max="9">
-		<label for="defense">Valeur de <strong>défense</strong> de votre champion: </label>
-        </div>
-        <div class="input-field">
-		<input id="agility" name="agility_points" type="number" value="5" min="1" max="9">
-		<label for="agility">Valeur d'<strong>agilité</strong> de votre champion: </label>
-        </div>
-    <a class="btn orange darken-3 waves-effect waves-light btn-large" id="boutonPoint">Valider mes points ⚔️</a>
-    </form>
 		<div id="combat">
 			<p>combat</p>
 			<p><%= user_name %></p>

@@ -25,7 +25,7 @@ class MySQLManager {
             host : 'localhost',
             user : 'root',
             password : '',
-            port: 8889,
+            port: 3306,
             database : 'killall'
         });
 

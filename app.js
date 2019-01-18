@@ -137,7 +137,10 @@ io.sockets.on('connection', function (socket, data) {
             let user_defense_points = ent.encode(data['user_defense_points']);
             let user_agility_points = ent.encode(data['user_agility_points']);
             socket.user_name = user_name;
-
+            socket.user_attack_points = user_attack_points;
+            socket.user_defense_points = user_defense_points;
+            socket.user_agility_points = user_agility_points;
+            
             characterManager.create(user_name,
                 user_attack_points,
                 user_defense_points,
@@ -145,6 +148,14 @@ io.sockets.on('connection', function (socket, data) {
                 localStorage.getItem(idKey));
         }
     });
+    
+    socket.on('Fighter', function(data){
+        const player1 = new Character(localStorage.getItem(idKey), socket.user_name, socket.user_attack_points, socket.user_defense_points, socket.user_agility_points);
+        const player2 = new Character(data['id'], data['nickname'], data['attack'], data['defense'], data['agility']);
+        let id_winner = player1.fight(player2);
+        characterManager.increaseKills(id_winner);
+        socket.emit("FightText", player1.listener.getString());
+    })
 });
 
 
