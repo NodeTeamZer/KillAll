@@ -58,9 +58,8 @@ class MySQLManager {
             }
 
             res.json({result: results});
-        });
 
-        this.connection.end();
+        });
     }
 
     /**
@@ -105,9 +104,8 @@ class MySQLManager {
                 }
 
                 res.json(jsonResult);
-            });
 
-            this.connection.end();
+            });
         }
     }
 

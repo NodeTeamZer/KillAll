@@ -48,14 +48,13 @@ class UserManager extends MySQLManager {
             this.connection.query(this.query, function (error) {
                 if (error) {
                     console.log(error);
-
-                    return;
+                } else {
+                    res.json({result: "User successfully inserted."});
                 }
 
-                res.json({result: "User successfully inserted."});
-            });
 
-            this.connection.end();
+
+            });
         }
     }
 
@@ -78,14 +77,12 @@ class UserManager extends MySQLManager {
             this.connection.query(this.query, function (error) {
                 if (error) {
                     console.log(error);
-
-                    return;
+                } else {
+                    console.log("User successfully inserted.");
                 }
 
-                console.log("User successfully inserted.");
-            });
 
-            this.connection.end();
+            });
         }
     }
 
@@ -113,9 +110,9 @@ class UserManager extends MySQLManager {
 
                 callback(results);
             }
-        });
 
-        this.connection.end();
+
+        });
     }
 
     /**
@@ -141,10 +138,8 @@ class UserManager extends MySQLManager {
                     console.log(error);
                 }
 
-                callback(results[0].id);
+                callback((results != null && (results[0]) != null) ? (results[0].id) : false);
             });
-
-            this.connection.end();
         }
     }
 }

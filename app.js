@@ -108,7 +108,9 @@ io.sockets.on('connection', function (socket, data) {
         let passwordConnexion = dataC.password;
 
         userManager.authenticate(loginConnexion, passwordConnexion, function (result) {
-            if (result != null) { 
+            if (!result) {
+                //TODO : Handle (message) that the info matches to no user.
+            } else {
                 localStorage.setItem(idKey, result);
 
                 characterManager.loadUserCharacters(result, function(characters) {
@@ -127,17 +129,19 @@ io.sockets.on('connection', function (socket, data) {
     });
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
     socket.on('NewPlayer', function(data) {
-        let user_name = ent.encode(data['user_name']);
-        let user_attack_points = ent.encode(data['user_attack_points']);
-        let user_defense_points = ent.encode(data['user_defense_points']);
-        let user_agility_points = ent.encode(data['user_agility_points']);
-        socket.user_name = user_name;
+        if (data) {
+            let user_name = ent.encode(data['user_name']);
+            let user_attack_points = ent.encode(data['user_attack_points']);
+            let user_defense_points = ent.encode(data['user_defense_points']);
+            let user_agility_points = ent.encode(data['user_agility_points']);
+            socket.user_name = user_name;
 
-        characterManager.create(user_name,
-            user_attack_points,
-            user_defense_points,
-            user_agility_points,
-            localStorage.getItem(idKey));
+            characterManager.create(user_name,
+                user_attack_points,
+                user_defense_points,
+                user_agility_points,
+                localStorage.getItem(idKey));
+        }
     });
 });
 
