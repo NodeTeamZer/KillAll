@@ -7,7 +7,7 @@ socket.on("EnemiesFound", function(data) {
 	characters_data.forEach(function(c) 
 	{ 
 		  $('#enemyList').append(
-			'<div class="col s12 m6" id="perso-'+c.id+'"><div class="card"><div class="card-content"><span class="card-title">'+c.nickname+'</span>ATTACK :'+c.attack+' | DEFENSE : '+c.defense+' | AGILITY : '+c.agility+' | TOTAL KILLS : '+c.kills+'</div><div class="card-action" id="'+c.id+'"><a id="play" href="#">JOUER CONTRE CE PERSONNAGE</a></div></div></li>'
+			'<div class="col s12 m6"><div class="card"><div class="card-content"><span class="card-title">🤴 '+c.nickname+'</span><span class="new badge">ATTACK : '+c.attack+'</span> <span class="new badge"> DEFENSE : '+c.defense+'</span> <span class="new badge"> AGILITY : '+c.agility+'</span> <span class="new badge"> TOTAL KILLS : '+c.kills+'</span></div><div class="card-action" id="'+c.id+'"><a id="play" href="#">JOUER CONTRE CE PERSONNAGE</a></div></div></li>'
 		  );
 	});	
 	$('#play').click(function() {
@@ -16,8 +16,7 @@ socket.on("EnemiesFound", function(data) {
 			if(c.id === fighter_id) {
 				let fighter_data = c;
 				socket.emit('Fighter', fighter_data);
-			} else {
-				console.log('non');
+				$('#enemy-choser').remove();
 			}
 		});
 	});
