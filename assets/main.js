@@ -11,15 +11,65 @@ if (!String.prototype.format) {
     };
 }
 
+/**
+ * Used to create cookies.
+ * @param name The name of the cookie
+ * @param value The value of the cookie.
+ * @param days The expiration date (NOW + days).
+ */
+function createCookie(name, value, days) {
+    if (days) {
+        const date = new Date();
+
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        const expires = "; expires="+date.toGMTString();
+    } else {
+        const expires = "";
+    }
+
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+/**
+ * Gets a cookie.
+ * @param name The name of the cookie to get.
+ * @return {*} The value of the cookie.
+ */
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+
+    for(let i = 0 ; i < ca.length ; i++) {
+        let c = ca[i];
+
+        while (c.charAt(0) === ' '){
+            c = c.substring(1,c.length);
+        }
+
+        if (c.indexOf(nameEQ) === 0) {
+            return c.substring(nameEQ.length,c.length);
+        }
+    }
+    return null;
+}
+
+/**
+ * Deletes a cookie.
+ * @param name The name of the cookie to delete.
+ */
+function deleteCookie(name) {
+    createCookie(name, "", -1);
+}
+
 $(function() {
     var socket = io.connect('http://localhost:3000');
-    
+
     // open new connexion form
     $("#open-connexion").click(function(){
         $("#connexion").toggleClass("d-none");
         $("#inscription").addClass("d-none");
     });
-    
+
     // validation connexion form
     $("#connexionButton").click(function(event){
 	event.preventDefault();
@@ -71,6 +121,14 @@ $(function() {
        } else {
             window.location.href = "/combat";
        }
+    });
+
+    socket.on("id", function(data) {
+        createCookie("id", data, 7);
+    });
+
+    socket.on("character", function(data) {
+        createCookie("character", data, 7);
     });
 
     // open new inscription form

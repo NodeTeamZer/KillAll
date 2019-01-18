@@ -197,7 +197,7 @@ class CharacterManager extends MySQLManager {
                 return;
             }
 
-            callback(results);
+            callback(results[0]);
 
         });
     }
@@ -229,13 +229,12 @@ class CharacterManager extends MySQLManager {
     /**
      * Increase the number of kills by the number given in parameter.
      * @param id The id of the character to update.
-     * @param nb The number to add to the existing kill number.
      */
-    increaseKills(id, nb) {
-        this.query = "UPDATE `{0}` SET {1} = {2} WHERE {3} = {4}"
+    increaseKills(id) {
+        this.query = "UPDATE `{0}` SET {1} = {2} + 1 WHERE {3} = {4}"
             .format(this.table,
                 this.fields[5],
-                this.connection.escape(nb),
+                this.fields[5],
                 this.fields[0],
                 this.connection.escape(id));
 
@@ -243,8 +242,6 @@ class CharacterManager extends MySQLManager {
             if (error) {
                 console.log(error);
             }
-
-
         });
     }
 }
