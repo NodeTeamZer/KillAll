@@ -11,10 +11,11 @@ class Character {
      * @type {int}
      * hp reprensenting the health's point of the new character
      * @type {int}
-     * kill_number representing the number of fight won by the character
+     * kills representing the number of fight won by the character
      * @type {int}
      **/
-    constructor(nickname, attack, defense, agility) {
+    constructor(id, nickname, attack, defense, agility) {
+        this.id = id;
         this.nickname = nickname;
         this.attack = attack;
         this.defense = defense;
@@ -23,7 +24,7 @@ class Character {
         this.kills = 0;
         this.listener = {
             update(str) {
-                this.string = str;
+                this.string += '<br>'+str;
             },
 
             getString() {
@@ -88,8 +89,8 @@ class Character {
     actionDefense(){
         let defense = this.dice();
         if (defense > this.defense){  // defense test
-            this.listener.update(this.nickname+" ne parvient pas à défendre et <strong>perd 1 point de vie !!</strong> Il lui reste "+this.hp)
             this.hp--;                // loose 1hp
+            this.listener.update(this.nickname+" ne parvient pas à défendre et <strong>perd 1 point de vie !!</strong> Il lui reste "+this.hp);
         }else{
             this.listener.update(this.nickname+" <span style='color: skyblue'>parvient à bloquer l'attaque !!</span>")
         }
@@ -102,7 +103,7 @@ class Character {
      **/
     fight(Character){
         let heads = Math.random();
-        while(this.hp > 0 || Character.hp > 0){     // while both characters have more than 0hp
+        while(this.hp > 0 && Character.hp > 0){     // while both characters have more than 0hp
             if (heads < 0,5){                       // heads or tails to know who start
                 if (this.actionAttack()){           // player1 tries to attack
                     Character.actionDefense();      // player2 tries to defend himself
@@ -119,16 +120,19 @@ class Character {
                 }
             }
         }
+        let winner = 0;
         if (this.hp == 0){
-            Character.kill_number++;
-            this.listener.update(Character.nickname+" tue son adversaire et  <span style='color: green'>REMPORTE LE COMBAT !!!!!!</span> Tout ca avec "+Character.hp+"hp restant.");
-            this.listener.update(this.nickname+" <span style='color: darkred'>est mort....</span>");
+            Character.kills++;
+            this.listener.update(Character.nickname+" <span style='color: red'>a tué votre champion... VOUS PERDEZ LE COMBAT :(:(:(:(</span>. "+Character.nickname+" est victorieux avec "+Character.hp+"hp restant.");
+            winner = Character.id;
         }else {
-            this.kill_number++;
+            this.kills++;
             this.listener.update(this.nickname+" tue son adversaire et  <span style='color: green'>REMPORTE LE COMBAT !!!!!!</span> Tout ca avec "+this.hp+"hp restant.");
             this.listener.update(Character.nickname+" <span style='color: darkred'>est mort....</span>");
+            winner = this.id;
         }
         this.hp = 10;                               
         Character.hp = 10;                          //both players recover there hp
+        return winner;
     }
 }

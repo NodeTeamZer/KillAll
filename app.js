@@ -65,6 +65,7 @@ app.set('view engine', 'ejs'); // configure template engine
 app.disable('x-powered-by');
 
 const CharacterManager = require("./CharacterManager.js");
+const Character = require("./Character.js");
 const UserManager = require("./UserManager.js");
 const characterManager = new CharacterManager();
 const userManager = new UserManager();
@@ -160,18 +161,42 @@ io.sockets.on('connection', function (socket, data) {
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
     socket.on('NewPlayer', function(data) {
         if (data) {
-            let user_name = ent.encode(data['user_name']);
-            let user_attack_points = ent.encode(data['user_attack_points']);
-            let user_defense_points = ent.encode(data['user_defense_points']);
-            let user_agility_points = ent.encode(data['user_agility_points']);
+            console.log(data);
+            let user_name = data[0];
+            let user_attack_points = data[1];
+            let user_defense_points = data[2];
+            let user_agility_points = data[3];
+            
             socket.user_name = user_name;
-
+            socket.user_attack_points = user_attack_points;
+            socket.user_defense_points = user_defense_points;
+            socket.user_agility_points = user_agility_points;
+            
+            const id = localStorage.getItem(idKey);
+            
             characterManager.create(user_name,
                 user_attack_points,
                 user_defense_points,
                 user_agility_points,
-                localStorage.getItem(idKey));
+                id);
+            
+            characterManager.loadUserCharacter(id, function(character) {
+                localStorage.setItem(characterKey, character);
+            });
+            
+            socket.emit("Created")
         }
+    });
+    
+    socket.on('Fighter', function(data){
+        character = localStorage.getItem(characterKey);
+        console.log(character);
+        
+        const player1 = new Character(character.id, character.nickname, character.attack, character.defense, character.agility);
+        const player2 = new Character(data['id'], data['nickname'], data['attack'], data['defense'], data['agility']);
+        let id_winner = player1.fight(player2);
+        characterManager.increaseKills(id_winner);
+        socket.emit("FightText", player1.listener.getString());
     });
 
     socket.on('FightPage', function() {

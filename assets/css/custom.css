@@ -58,20 +58,3 @@ strong {
     max-width: 100%;
     max-height: 400px;
 }
-
-.card-title {
-	text-transform: uppercase;
-}
-
-span.badge {
-	float: none;
-}
-
-span.badge.new {
-	margin-top: 1rem;
-	background-color: #bf360c;
-}
-
-span.badge.new::after {
-	content: unset;
-}

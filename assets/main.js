@@ -115,12 +115,17 @@ $(function() {
                 $('#name-alert').remove();
                 $('#name').after('<div id="name-alert" class="alert alert-danger">Veuillez renseigner votre nom</div>');
             } else {
-                $('#new-champ-form').submit();
+                let val = [$("#name").val(), $("#attack").val(), $("#defense").val(), $("#agility").val()];
+                socket.emit("NewPlayer", val);
             }
             });
        } else {
             window.location.href = "/combat";
        }
+    });
+    
+    socket.on("Created", function(data) {
+         window.location.href = "/combat";
     });
 
     socket.on("id", function(data) {
